@@ -26,8 +26,8 @@ d = 2
 epsilon_vals = np.linspace(0, 1, 100)
 
 plt.figure(figsize=(8.5, 5.5), dpi=100)
-plt.plot(epsilon_vals, [requested_expression(eps, d) for eps in epsilon_vals], color='blue', lw=1.5, label=r'State Von Neumann Entropy')
-plt.plot(epsilon_vals, [von_neumann_entropy_upper_bound(eps, d) for eps in epsilon_vals], color='red', lw=1.5, label=r'Von Neumann Entropy upper bound')
+plt.plot(epsilon_vals, [requested_expression(eps, d) for eps in epsilon_vals], color='blue', lw=1.5, label=r'State: $\log_2(d) - S(\rho_\psi)$')
+plt.plot(epsilon_vals, [von_neumann_entropy_upper_bound(eps, d) for eps in epsilon_vals], color='red', lw=1.5, label=r'Measurement UB: $H_2(P_{guess}^*(\mathcal{M}_d))+(1-P_{guess}^*(\mathcal{M}_d))\log_2(d-1)$')
 plt.xlabel(r'$\epsilon$')
 plt.ylabel(r'Entropies')
 plt.title(f'Noisy quantum measurement (d={d})')

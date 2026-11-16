@@ -27,8 +27,8 @@ m_1 = np.linspace(0, 0.5, 100)
 m_2 = 0.5
 
 plt.figure(figsize=(8.5, 5.5), dpi=100)
-plt.plot(m_1, [requested_expression(m_1_val, m_2) for m_1_val in m_1], color='blue', lw=1.5, label=r'State Von Neumann Entropy')
-plt.plot(m_1, [von_neumann_entropy_upper_bound(m_1_val, m_2) for m_1_val in m_1], color='red', lw=1.5, label=r'Von Neumann Entropy upper bound')
+plt.plot(m_1, [requested_expression(m_1_val, m_2) for m_1_val in m_1], color='blue', lw=1.5, label=r'State: $\log_2(d) - S(\rho_\psi)$')
+plt.plot(m_1, [von_neumann_entropy_upper_bound(m_1_val, m_2) for m_1_val in m_1], color='red', lw=1.5, label=r'Measurement UB: $\frac{1}{2}\left[\text{Tr}[M_1] H_2\left(\frac{1-P_{guess}^*}{\text{Tr}[M_1]}\right)+ (2-\text{Tr}[M_1]) H_2\left(\frac{1-P_{guess}^*}{2-\text{Tr}[M_1]}\right) \right]$')
 plt.xlabel(r'$m_1$')
 plt.ylabel(r'Entropies')
 plt.title(f'Two outcome quantum measurement ($m_2={m_2}$)')

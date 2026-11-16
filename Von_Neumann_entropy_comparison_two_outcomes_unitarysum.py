@@ -35,8 +35,8 @@ entropy_upper_bound_vals = [
 ]
 
 plt.figure(figsize=(8.5, 5.5), dpi=100)
-plt.plot(m_1, state_entropy_vals, color='blue', lw=1.5, label=r'State Von Neumann Entropy')
-plt.plot(m_1, entropy_upper_bound_vals, color='red', lw=1.5, label=r'Von Neumann Entropy upper bound')
+plt.plot(m_1, state_entropy_vals, color='blue', lw=1.5, label=r'State: $\log_2(d) - S(\rho_\psi)$')
+plt.plot(m_1, entropy_upper_bound_vals, color='red', lw=1.5, label=r'Measurement UB: $ H_2\left(1-P_{guess}^*\right)$')
 plt.xlabel(r'$m_1$')
 plt.ylabel(r'Entropies')
 plt.title(f'Two outcome quantum measurement ($m_2=1-m_1$)')
