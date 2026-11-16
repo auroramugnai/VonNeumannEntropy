@@ -1,0 +1,18 @@
+# Python bytecode / caches
+__pycache__/
+*.py[cod]
+
+# Virtual environments (in case one is ever created inside the repo)
+.venv/
+venv/
+env*/
+
+# Editor settings (machine-specific interpreter path)
+.vscode/
+
+# Mosek licence
+*.lic
+
+# OS files
+Thumbs.db
+.DS_Store
