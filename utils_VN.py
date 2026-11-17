@@ -169,6 +169,36 @@ def coarse_grain_binary_POVM(meas_full):
 
     return [E0, E1]
 
+def generate_two_outcome_POVM(m1, m2, dim):
+    """
+    Genera una misura POVM a due esiti (ideale, senza rumore):
+        M_1 = m_1 |0><0| + m_2 |1><1|
+        M_2 = I - M_1
+    
+    Parameters:
+    - m1, m2: coefficienti reali per i proiettori |0><0| e |1><1|
+    - dim: dimensione dello spazio di Hilbert (default = 2 per un qubit)
+    
+    Returns:
+    - Una lista di operatori QuTiP Qobj [M_1, M_2]
+    """
+    # Identità
+    id_qt = qt.qeye(dim)
+
+    # Costruzione dei proiettori di base
+    ket0 = qt.basis(dim, 0)
+    ket1 = qt.basis(dim, 1)
+    
+    proj0 = ket0 * ket0.dag()  # |0><0|
+    proj1 = ket1 * ket1.dag()  # |1><1|
+
+    # Operatore M_1 ideale
+    M_1 = m1 * proj0 + m2 * proj1
+
+    # Completamento della misura POVM: M_2 = I - M_1
+    M_2 = id_qt - M_1
+
+    return [M_1, M_2]
 
 def generate_noisy_projective_POVM(dim, pM):
     """

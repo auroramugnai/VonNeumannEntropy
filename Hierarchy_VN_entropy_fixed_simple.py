@@ -460,7 +460,7 @@ def compute_VN_entropy_lower_bound(dim, n_out, rhoS, measS_fix, m=4, Z_level=1, 
 
     return entropy
 
-
+'''
 if __name__ == "__main__":
 
     # Problem setup
@@ -483,6 +483,35 @@ if __name__ == "__main__":
 
     # Measurement M0, M1 (generalisation of |0><0| + noise)
     measS_fix = generate_noisy_projective_POVM(dim, pM)
+    print(measS_fix)
+
+    H = compute_VN_entropy_lower_bound(dim, n_out, rhoS, measS_fix, m=4, Z_level=3, Z_bound='trace')
+    print("Conditional von Neumann entropy H(A|E) is lower bounded by:", H)
+'''
+
+if __name__ == "__main__":
+
+    # Problem setup
+    dim = 2  # Hilbert space dimension
+    n_out = 2
+
+    # Define |0> and |1>
+    basis = [qt.basis(dim, i) for i in range(dim)]
+
+    # Define the parameter
+    m1 = 0.75 # You can set this to any value between 0 and 1
+    m2 = 1-m1
+    pS = 1.0
+
+    # Define |+> state and projector
+    plus = sum(basis).unit()              # |+> = (|0>+|1>+...)/sqrt(dim)
+    proj_plus = plus * plus.dag()
+    id_qt = qt.qeye(dim)
+
+    rhoS = pS * proj_plus + (1 - pS) * id_qt / dim
+
+    # Measurement M0, M1 (generalisation of |0><0| + noise)
+    measS_fix = generate_two_outcome_POVM(m1, m2, dim)
     print(measS_fix)
 
     H = compute_VN_entropy_lower_bound(dim, n_out, rhoS, measS_fix, m=4, Z_level=3, Z_bound='trace')
