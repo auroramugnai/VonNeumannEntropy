@@ -5,7 +5,8 @@ import math
 def requested_expression(epsilon, d):
     lambda_0 = 1 - epsilon + epsilon / d
     epsilon_log_term = 0 if epsilon == 0 else epsilon * math.log2(epsilon)
-    return (1 - epsilon) * math.log2(d) + epsilon_log_term + lambda_0 * math.log2(lambda_0)
+    epsilon_log_term_1 = 0 if epsilon == 0 else (epsilon/d) * math.log2((epsilon/d))
+    return (1 - epsilon) * math.log2(d) + epsilon_log_term + lambda_0 * math.log2(lambda_0) - epsilon_log_term_1
 
 def P(x, d):
     return (1/d)*((1-x+((x)/(d)))**(((1)/(2)))+(d-1) * ((((x)/(d)))**(((1)/(2)))))**(2)
