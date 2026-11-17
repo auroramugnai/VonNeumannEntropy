@@ -25,15 +25,15 @@ def von_neumann_entropy_upper_bound(eps,d):
     complement_log_term = 0 if probability == 1 else (1-probability) * math.log2(d-1)
     return H_2(probability) + complement_log_term
 
-von_neumann_entropy_lower_bound = np.array([3.643860768676177e-08,4.9374655475276086e-09, 2.813493296116576e-07,0.06614367451405379,0.26421459809673475, 0.4896980154659696])
+von_neumann_entropy_lower_bound = np.array([6.074223701801884e-08,0.0982384110746608, 0.32053007949021595,0.6245059694161412,0.8367521549097559, 0.9887290010867122])
 d = 2
-epsilon_vals_1 = np.array([0.99, 0.75, 0.5, 0.25, 0.1, 0.01])
+epsilon_vals_1 = np.array([1.0, 0.75, 0.5, 0.25, 0.1, 0.0])
 epsilon_vals = np.linspace(0, 1, 100)
 
 plt.figure(figsize=(8.5, 5.5), dpi=100)
 plt.plot(epsilon_vals, [requested_expression(eps, d) for eps in epsilon_vals], color='blue', lw=1.5, label=r'State: $\log_2(d) - S(\rho_\psi)$')
 plt.plot(epsilon_vals, [von_neumann_entropy_upper_bound(eps, d) for eps in epsilon_vals], color='red', lw=1.5, label=r'Measurement UB: $H_2(P_{guess}^*(\mathcal{M}_d))+(1-P_{guess}^*(\mathcal{M}_d))\log_2(d-1)$')
-plt.plot(epsilon_vals_1, von_neumann_entropy_lower_bound, color='green', lw=1.5, label=r'Measurement numerical LB')
+plt.plot(epsilon_vals_1, von_neumann_entropy_lower_bound, marker='.', color='green', lw=1.5, label=r'Measurement numerical LB')
 plt.xlabel(r'$\epsilon$')
 plt.ylabel(r'Entropies')
 plt.title(f'Noisy quantum measurement (d={d})')
