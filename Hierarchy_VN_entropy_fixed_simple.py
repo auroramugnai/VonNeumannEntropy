@@ -487,7 +487,7 @@ if __name__ == "__main__":
 
     H = compute_VN_entropy_lower_bound(dim, n_out, rhoS, measS_fix, m=4, Z_level=3, Z_bound='trace')
     print("Conditional von Neumann entropy H(A|E) is lower bounded by:", H)
-'''
+
 
 if __name__ == "__main__":
 
@@ -516,3 +516,51 @@ if __name__ == "__main__":
 
     H = compute_VN_entropy_lower_bound(dim, n_out, rhoS, measS_fix, m=4, Z_level=3, Z_bound='trace')
     print("Conditional von Neumann entropy H(A|E) is lower bounded by:", H)
+'''
+if __name__ == "__main__":
+
+    # Problem setup
+    dim = 2  # Hilbert space dimension
+    n_out = 2
+
+    # Define |0> and |1>
+    basis = [qt.basis(dim, i) for i in range(dim)]
+    pS = 1.0
+
+    # Define |+> state and projector
+    plus = sum(basis).unit()              # |+> = (|0>+|1>+...)/sqrt(dim)
+    proj_plus = plus * plus.dag()
+    id_qt = qt.qeye(dim)
+
+    rhoS = pS * proj_plus + (1 - pS) * id_qt / dim
+
+    # Scegli i valori di m1 che vuoi testare (es. 21 valori da 0.0 a 1.0)
+    # Puoi regolarli modificando gli argomenti di np.linspace(start, stop, num_valori)
+    m1_values = np.array([0.1, 0.3, 0.45, 0.5, 0.55, 0.9])
+
+    # Nome del file di output
+    output_filename = "risultati_m1_bound.txt"
+
+    # Apriamo il file in scrittura ('w')
+    with open(output_filename, "w") as f:
+        # Scriviamo un'intestazione per chiarezza
+        f.write("m1\tlower_bound_H\n")
+
+        for m1 in m1_values:
+            m2 = 1.0 - m1
+            
+            print(f"Calcolo in corso per m1 = {m1:.4f} (m2 = {m2:.4f})...")
+            
+            # Measurement M0, M1
+            measS_fix = generate_two_outcome_POVM(m1, m2, dim)
+            
+            # Calcolo dell'entropia
+            H = compute_VN_entropy_lower_bound(dim, n_out, rhoS, measS_fix, m=4, Z_level=3, Z_bound='trace')
+            
+            # Scriviamo riga per riga sul file (separate da tabulazione)
+            f.write(f"{m1}\t{H}\n")
+            
+            # Forza la scrittura immediata su disco (evita perdite in caso di interruzioni)
+            f.flush()
+
+    print(f"\nFatto! Tutti i risultati sono stati salvati correttamente in '{output_filename}'.")
