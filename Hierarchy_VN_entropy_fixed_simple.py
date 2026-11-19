@@ -536,8 +536,7 @@ if __name__ == "__main__":
 
     # Scegli i valori di m1 che vuoi testare (es. 21 valori da 0.0 a 1.0)
     # Puoi regolarli modificando gli argomenti di np.linspace(start, stop, num_valori)
-    m1_values = np.array([0.1, 0.3, 0.45, 0.5, 0.55, 0.9])
-
+    m1_values = np.array([0.05, 0.15, 0.25, 0.35, 0.41, 0.42, 0.43, 0.44, 0.46, 0.47, 0.48, 0.49, 0.51, 0.52, 0.53, 0.54, 0.56, 0.57, 0.58, 0.59, 0.65, 0.70, 0.85, 0.95])
     # Nome del file di output
     output_filename = "risultati_m1_bound.txt"
 
