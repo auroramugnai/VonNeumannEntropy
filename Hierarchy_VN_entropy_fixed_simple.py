@@ -517,6 +517,8 @@ if __name__ == "__main__":
     H = compute_VN_entropy_lower_bound(dim, n_out, rhoS, measS_fix, m=4, Z_level=3, Z_bound='trace')
     print("Conditional von Neumann entropy H(A|E) is lower bounded by:", H)
 '''
+
+'''
 if __name__ == "__main__":
 
     # Problem setup
@@ -563,3 +565,49 @@ if __name__ == "__main__":
             f.flush()
 
     print(f"\nFatto! Tutti i risultati sono stati salvati correttamente in '{output_filename}'.")
+'''
+
+if __name__ == "__main__":
+
+    # Problem setup
+    dim = 2  # Hilbert space dimension
+    n_out = 2
+
+    # Define |0> and |1>
+    basis = [qt.basis(dim, i) for i in range(dim)]
+    pS = 1.0
+
+    # Define |+> state and projector
+    plus = sum(basis).unit()              # |+> = (|0>+|1>+...)/sqrt(dim)
+    proj_plus = plus * plus.dag()
+    id_qt = qt.qeye(dim)
+
+    rhoS = pS * proj_plus + (1 - pS) * id_qt / dim
+
+    # Array di valori di pM da testare
+    pM_values = np.array([0.05, 0.1, 0.15, 0.2, 0.3, 0.35, 0.4, 0.45, 0.55, 0.6, 0.65, 0.70, 0.8, 0.85, 0.95])
+    
+    filename = "risultati_pM.txt"
+
+    print("=== Avvio simulazione notturna con salvataggio incrementale ===")
+    
+    for i, pM in enumerate(pM_values):
+        print(f"\n[{i+1}/{len(pM_values)}] Test in corso con pM = {pM:.4f}")
+        
+        try:
+            # Measurement M0, M1 (generalisation of |0><0| + noise)
+            measS_fix = generate_noisy_projective_POVM(dim, pM)
+
+            H = compute_VN_entropy_lower_bound(dim, n_out, rhoS, measS_fix, m=4, Z_level=3, Z_bound='trace')
+            print(f"-> H(A|E) lower bound: {H}")
+
+            # Salvataggio immediato su file (append) dopo ogni singolo calcolo
+            with open(filename, "a") as f:
+                f.write(f"{pM}\t{H}\n")
+            print(f"-> Salvato su {filename}")
+            
+        except Exception as e:
+            print(f"Errore durante l'esecuzione con pM={pM}: {e}")
+            continue
+
+    print("\n=== Simulazione completata con successo! ===")
